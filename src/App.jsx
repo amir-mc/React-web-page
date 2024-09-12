@@ -7,7 +7,7 @@ const title = {
 const combolist = [
   {
   id: 1,
-  name:'alii',
+  name:'ali',
   title:'react pages',
   number:55,
   skill:20,
