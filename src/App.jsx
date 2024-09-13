@@ -73,10 +73,13 @@ const List = () => {
   )
 }
 const Search = () => {
+  const handle = (event)=> {
+    console.log(event.target.value);
+  }
   return(
 <div>
 <label htmlFor="search">Search</label>
-  <input type="text" id="search" />
+  <input onchange={handle} type="text" id="search" />
 
 </div>    
   )
