@@ -44,11 +44,11 @@ return (
 )
  
 }
-const List = () => {
+const List = (props) => {
   return(
     <ul>
     {
-      combolist.map(function(item){
+      props.combolist.map((item){
         return <li key={item.id}>
           
           <span>
