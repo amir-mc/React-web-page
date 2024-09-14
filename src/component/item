@@ -1,0 +1,29 @@
+
+const Item = (prosp)=>{
+    return(
+      <li>
+             
+            <span>
+              <a href={prosp.item.URL}> {prosp.item.name} </a>
+            </span>
+            <span>
+              {
+                prosp.item.skill
+              }
+            </span>
+            <span>
+              {
+                prosp.item.title
+              }
+            </span>
+            <span>
+              {
+                prosp.javd
+              }
+            </span>
+          
+          </li>
+  
+    )
+  }
+  export default Item;
