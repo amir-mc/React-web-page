@@ -3,6 +3,7 @@
 import List from "./components/list";
 //import Item from "./components/Item";
 import Search from "./components/search";
+import { useState } from "react";
 
 const title = {
   number:'hello',
@@ -10,18 +11,6 @@ const title = {
 };
 const App = () => {
 
-  const H1 = (mamad) =>{
-    mamad='155';
-     
-    console.log(mamad)
-
-  }
-
-  const handelBack = (event) =>{  
-    console.log(event.target.value)
-
-  }
-  
   const stor = [
     {
     id: 1,
@@ -41,18 +30,35 @@ const App = () => {
   }
   
   
+  
 
 
   ];
  
+  const [searchTerm , updateSerach]=useState('laravel');
+
+  const serachStory =stor.filter((stor)=>stor.name.toLocaleLowerCase().includes(searchTerm.toLocaleLowerCase()))
+
+  const H1 = (mamad) =>{
+    mamad='155';
+     
+    console.log(mamad)
+
+  }
+
+  const handelBack = (event) =>{  
+    updateSerach(event.target.value)
+
+  }
+
 return (
   <div>
   <h1>
    {title.number} {title.titlee}
   </h1>
   <H1/>
-  <Search seaechs={handelBack}/>
-  <List list={stor} javd={1220}/>
+  <Search seaechs={handelBack} titleSearch={searchTerm}/>
+  <List list={serachStory} javd={1220}/>
   <span>
     
   </span>
