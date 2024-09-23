@@ -7,11 +7,11 @@ const Search = ({seaechs , titleSearch}) => {
       seaechs(event);
     }
     return(
-  <div>
+ <>
   <label htmlFor="search">Search</label>
     <input onChange={handel} type="text" id="search" value={titleSearch} />
+ </>
  
-  </div>    
     )
   }
   export default Search;
