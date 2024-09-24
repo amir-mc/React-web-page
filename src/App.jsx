@@ -53,7 +53,7 @@ return (
    {title.number} {title.titlee}
   </h1>
  
-  <Search seaechs={handelBack} titleSearch={searchTerm}/>
+  <Search type="text" id="Search" value="search" label="search" seaechs={handelBack} titleSearch={searchTerm} autoFo/>
   <List list={serachStory} javd={1220}/>
   <span>
     
@@ -67,4 +67,3 @@ return (
 
 
 export default App
-
