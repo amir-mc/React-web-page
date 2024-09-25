@@ -1,12 +1,12 @@
 
 import Item from "./Item";
 
-const List = ({list , javd}) => {
-    return(  
+const List = ({list , javd , HandelRemov}) => {
+    return(   
      <ul>
        <p>{javd}</p>
-       {list.map(({ id ,...item})=>(
-         <Item key={id} {...item}/>
+       {list.map((item)=>(
+         <Item key={item.id} {...item} HandelRemov={HandelRemov}/>
          
        ))}
      </ul>
