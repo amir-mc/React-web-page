@@ -1,5 +1,6 @@
 
-const Item = ({skill,title,name,URL,javd})=>{
+const Item = ({id,skill,title,name,URL,javd,HandelRemov})=>{
+ 
     return(
       <li>
              
@@ -21,6 +22,9 @@ const Item = ({skill,title,name,URL,javd})=>{
                javd
               }
             </span>
+            <button onClick={()=>HandelRemov(id)} >
+              removve
+            </button>
           
           </li>
   
