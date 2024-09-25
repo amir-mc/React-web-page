@@ -1,5 +1,6 @@
 
 
+import { useState } from "react";
 import List from "./components/list";
 //import Item from "./components/Item";
 import Search from "./components/search";
@@ -12,7 +13,7 @@ const title = {
 };
 const App = () => {
 
-  const stor = [
+  const storItem = [
     {
     id: 1,
     name:'alii',
@@ -35,10 +36,17 @@ const App = () => {
 
 
   ];
- 
+  const [stories , Setsories]=useState(storItem)
+
   const [searchTerm , updateSerach]=useStateStor('search','')
 
-  const serachStory =stor.filter((stor)=>stor.name.toLocaleLowerCase().includes(searchTerm.toLocaleLowerCase()))
+    const HandelRemov=(id)=>{ 
+      const storyFil =stories.filter(stor=> stor.id !== id)
+      Setsories(storyFil);
+
+    }
+
+  const serachStory =stories.filter((stor)=>stor.name.toLocaleLowerCase().includes(searchTerm.toLocaleLowerCase()))
 
 
   const handelBack = (event) =>{  
@@ -54,7 +62,7 @@ return (
   </h1>
  
   <Search type="text" id="Search" value="search" label="search" seaechs={handelBack} titleSearch={searchTerm} autoFo/>
-  <List list={serachStory} javd={1220}/>
+  <List list={serachStory} javd={1220} HandelRemov={HandelRemov}/>
   <span>
     
   </span>
