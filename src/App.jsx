@@ -1,6 +1,6 @@
 
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import List from "./components/list";
 //import Item from "./components/Item";
 import Search from "./components/search";
@@ -36,9 +36,22 @@ const App = () => {
 
 
   ];
-  const [stories , Setsories]=useState(storItem)
+  const [stories , Setsories]=useState([])
 
   const [searchTerm , updateSerach]=useStateStor('search','')
+
+  const sYncpromise =()=>
+    new Promise((resolve)=>{
+    setTimeout(() => {
+      resolve({data:{stories:storItem}})
+    }, 1000);
+  })
+
+  useEffect(()=>{
+      sYncpromise().then(result=>{
+        Setsories(result.data.stories)
+      })
+  },[])
 
     const HandelRemov=(id)=>{ 
       const storyFil =stories.filter(stor=> stor.id !== id)
@@ -62,7 +75,7 @@ return (
   </h1>
  
   <Search type="text" id="Search" value="search" label="search" seaechs={handelBack} titleSearch={searchTerm} autoFo/>
-  <List list={serachStory} javd={1220} HandelRemov={HandelRemov}/>
+  <List list={serachStory} javd={1220} HandelRemo={HandelRemov}/>
   <span>
     
   </span>
