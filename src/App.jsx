@@ -37,20 +37,24 @@ const App = () => {
 
   ];
   const [stories , Setsories]=useState([])
-
+  const [loDing , isLoding]=useState(false);
+  const [eRorr , setISeroor]=useState(false)
   const [searchTerm , updateSerach]=useStateStor('search','')
 
   const sYncpromise =()=>
-    new Promise((resolve)=>{
+    new Promise((resolve,reject)=>{
     setTimeout(() => {
-      resolve({data:{stories:storItem}})
-    }, 1000);
-  })
+      //resolve({data:{stories:storItem}})
+      reject()
+    }, 2000 );
+  })  
 
   useEffect(()=>{
+    isLoding(true);
       sYncpromise().then(result=>{
         Setsories(result.data.stories)
-      })
+        isLoding(false)
+      }).catch(()=> setISeroor(true))
   },[])
 
     const HandelRemov=(id)=>{ 
@@ -73,8 +77,16 @@ return (
   <h1>
    {title.number} {title.titlee}
   </h1>
- 
-  <Search type="text" id="Search" value="search" label="search" seaechs={handelBack} titleSearch={searchTerm} autoFo/>
+
+  {
+    eRorr && <p>ERORRRRRRRR</p>
+  }
+
+ {
+  loDing ?(<p>LOding</p>):
+  (<Search type="text" id="Search" value="search" label="search" seaechs={handelBack} titleSearch={searchTerm} autoFo/>)
+ }
+  
   <List list={serachStory} javd={1220} HandelRemo={HandelRemov}/>
   <span>
     
