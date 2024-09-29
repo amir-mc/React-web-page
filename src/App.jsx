@@ -1,6 +1,6 @@
 
 
-import { useEffect, useState } from "react";
+import { useEffect, useReducer, useState } from "react";
 import List from "./components/list";
 //import Item from "./components/Item";
 import Search from "./components/search";
@@ -11,6 +11,19 @@ const title = {
   number:'hello',
   titlee:'act pages'
 };
+
+const storyReduser=(state,action)=>{
+  switch (action.type) {
+    case 'SET_STOR':
+      return action.payload;
+       
+      //case 'REMOVE_STOR':
+     // return stories.filter((stor)=> stor.id !== action.payload)    
+    default:
+      return state
+  }
+}
+
 const App = () => {
 
   const storItem = [
@@ -31,35 +44,36 @@ const App = () => {
     URL:'HTTPS://x.com'
   }
   
-  
-  
-
 
   ];
-  const [stories , Setsories]=useState([])
+  const [stories , dipacthStor]=useReducer(storyReduser,[])
+  //const [stories , Setsories]=useState([])
   const [loDing , isLoding]=useState(false);
-  const [eRorr , setISeroor]=useState(false)
+
   const [searchTerm , updateSerach]=useStateStor('search','')
 
   const sYncpromise =()=>
-    new Promise((resolve,reject)=>{
+    new Promise((resolve)=>{
     setTimeout(() => {
-      //resolve({data:{stories:storItem}})
-      reject()
+      resolve({data:{stories:storItem}})
+     
     }, 2000 );
   })  
 
   useEffect(()=>{
     isLoding(true);
       sYncpromise().then(result=>{
-        Setsories(result.data.stories)
+        dipacthStor({type:'SET_STOR' , payload: result.data.stories})
         isLoding(false)
-      }).catch(()=> setISeroor(true))
+      })
   },[])
 
     const HandelRemov=(id)=>{ 
+      
       const storyFil =stories.filter(stor=> stor.id !== id)
-      Setsories(storyFil);
+      dipacthStor({type:'SET_STOR' , payload: storyFil})
+     // dipacthStor({type:'REMOVE_STOR' ,payload:id })
+   
 
     }
 
@@ -78,9 +92,7 @@ return (
    {title.number} {title.titlee}
   </h1>
 
-  {
-    eRorr && <p>ERORRRRRRRR</p>
-  }
+
 
  {
   loDing ?(<p>LOding</p>):
