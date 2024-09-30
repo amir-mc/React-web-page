@@ -14,11 +14,20 @@ const title = {
 
 const storyReduser=(state,action)=>{
   switch (action.type) {
-    case 'SET_STOR':
-      return action.payload;
-       
-      //case 'REMOVE_STOR':
-     // return stories.filter((stor)=> stor.id !== action.payload)    
+    case 'SET_STOR_FETCH':
+      return {...state,isLoding:true,isErorr:false
+      }
+      case 'SET_STOR_SUCSSES':
+      return {...state,isLoding:false,isErorr:false,data:action.payload
+      }
+      case 'SET_STOR_ERROR':
+      return {...state,isLoding:false,isErorr:true
+      }
+
+
+      case 'REMOVE_STOR':
+      return {...state,
+         data: state.data.filter((stor)=> stor.id !== action.payload),    }
     default:
       return state
   }
@@ -46,38 +55,40 @@ const App = () => {
   
 
   ];
-  const [stories , dipacthStor]=useReducer(storyReduser,[])
+  const [stories , dipacthStor]=useReducer(storyReduser,{
+    data:[], isLoding:false , isErorr:false
+  })
   //const [stories , Setsories]=useState([])
-  const [loDing , isLoding]=useState(false);
-
+  
+  
   const [searchTerm , updateSerach]=useStateStor('search','')
 
   const sYncpromise =()=>
     new Promise((resolve)=>{
     setTimeout(() => {
-      resolve({data:{stories:storItem}})
-     
+     resolve({data:{stories:storItem}})
+    // reject()
     }, 2000 );
   })  
 
   useEffect(()=>{
-    isLoding(true);
+    dipacthStor({type:'SET_STOR_FETCH'})
       sYncpromise().then(result=>{
-        dipacthStor({type:'SET_STOR' , payload: result.data.stories})
-        isLoding(false)
-      })
+        dipacthStor({type:'SET_STOR_SUCSSES' , payload: result.data.stories})
+      
+      }).catch(()=>dipacthStor({type:'SET_STOR_ERROR'}))
   },[])
 
     const HandelRemov=(id)=>{ 
       
-      const storyFil =stories.filter(stor=> stor.id !== id)
-      dipacthStor({type:'SET_STOR' , payload: storyFil})
-     // dipacthStor({type:'REMOVE_STOR' ,payload:id })
+     // const storyFil =stories.filter(stor=> stor.id !== id)
+    //  dipacthStor({type:'SET_STOR' , payload: storyFil})
+      dipacthStor({type:'REMOVE_STOR' ,payload:id })
    
 
     }
 
-  const serachStory =stories.filter((stor)=>stor.name.toLocaleLowerCase().includes(searchTerm.toLocaleLowerCase()))
+  const serachStory =stories.data.filter((stor)=>stor.name.toLocaleLowerCase().includes(searchTerm.toLocaleLowerCase()))
 
 
   const handelBack = (event) =>{  
@@ -92,10 +103,12 @@ return (
    {title.number} {title.titlee}
   </h1>
 
-
+{
+  stories.isErorr && (<p>ERRRRRROR</p>)
+}
 
  {
-  loDing ?(<p>LOding</p>):
+  stories.isLoding ?(<p> lodingg </p>):
   (<Search type="text" id="Search" value="search" label="search" seaechs={handelBack} titleSearch={searchTerm} autoFo/>)
  }
   
