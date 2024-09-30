@@ -2,7 +2,6 @@
 
 import { useEffect, useReducer, useState } from "react";
 import List from "./components/list";
-//import Item from "./components/Item";
 import Search from "./components/search";
 
 import useStateStor from "./hooks/useStoragestate";
@@ -58,9 +57,6 @@ const App = () => {
   const [stories , dipacthStor]=useReducer(storyReduser,{
     data:[], isLoding:false , isErorr:false
   })
-  //const [stories , Setsories]=useState([])
-  
-  
   const [searchTerm , updateSerach]=useStateStor('search','')
 
   const sYncpromise =()=>
@@ -79,13 +75,8 @@ const App = () => {
       }).catch(()=>dipacthStor({type:'SET_STOR_ERROR'}))
   },[])
 
-    const HandelRemov=(id)=>{ 
-      
-     // const storyFil =stories.filter(stor=> stor.id !== id)
-    //  dipacthStor({type:'SET_STOR' , payload: storyFil})
+    const HandelRemov=(id)=>{
       dipacthStor({type:'REMOVE_STOR' ,payload:id })
-   
-
     }
 
   const serachStory =stories.data.filter((stor)=>stor.name.toLocaleLowerCase().includes(searchTerm.toLocaleLowerCase()))
