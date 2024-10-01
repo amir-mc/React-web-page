@@ -2,6 +2,7 @@
 
 import { useEffect, useReducer, useState } from "react";
 import List from "./components/list";
+//import Item from "./components/Item";
 import Search from "./components/search";
 
 import useStateStor from "./hooks/useStoragestate";
@@ -34,54 +35,36 @@ const storyReduser=(state,action)=>{
 
 const App = () => {
 
-  const storItem = [
-    {
-    id: 1,
-    name:'alii',
-    title:'react pages',
-    number:55,
-    skill:20,
-    URL:'HTTPS://z.com'
-  },
-  {
-    id: 2,
-    name:'javad',
-    title:'laravel pages',
-    number:33,
-    skill:18,
-    URL:'HTTPS://x.com'
-  }
-  
-
-  ];
+ 
   const [stories , dipacthStor]=useReducer(storyReduser,{
     data:[], isLoding:false , isErorr:false
   })
+  //const [stories , Setsories]=useState([])
+  
+  
   const [searchTerm , updateSerach]=useStateStor('search','')
 
-  const sYncpromise =()=>
-    new Promise((resolve)=>{
-    setTimeout(() => {
-     resolve({data:{stories:storItem}})
-    // reject()
-    }, 2000 );
-  })  
+  const API='https://react-mini-projects-api.classbon.com/story/list';
 
   useEffect(()=>{
-    dipacthStor({type:'SET_STOR_FETCH'})
-      sYncpromise().then(result=>{
-        dipacthStor({type:'SET_STOR_SUCSSES' , payload: result.data.stories})
-      
-      }).catch(()=>dipacthStor({type:'SET_STOR_ERROR'}))
-  },[])
+      if(!searchTerm) return;
 
-    const HandelRemov=(id)=>{
+    dipacthStor({type:'SET_STOR_FETCH'})
+    fetch(`${API}?query=${searchTerm}`).then((response)=>response.json()).then((stories)=>{
+      dipacthStor({type:'SET_STOR_SUCSSES' , payload: stories})
+
+    })
+    .catch(()=>dipacthStor({type:'SET_STOR_ERROR'}))
+    
+  },[searchTerm])
+
+    const HandelRemov=(id)=>{ 
       dipacthStor({type:'REMOVE_STOR' ,payload:id })
     }
 
-  const serachStory =stories.data.filter((stor)=>stor.name.toLocaleLowerCase().includes(searchTerm.toLocaleLowerCase()))
-
-
+  //const serachStory =stories.data.filter((stor)=>stor.name.toLocaleLowerCase().includes(searchTerm.toLocaleLowerCase()))
+  
+  
   const handelBack = (event) =>{  
     updateSerach(event.target.value)
  
@@ -103,7 +86,8 @@ return (
   (<Search type="text" id="Search" value="search" label="search" seaechs={handelBack} titleSearch={searchTerm} autoFo/>)
  }
   
-  <List list={serachStory} javd={1220} HandelRemo={HandelRemov}/>
+  <List list={stories.data}  HandelRemo={HandelRemov}/>
+
   <span>
     
   </span>
