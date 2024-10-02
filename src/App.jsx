@@ -2,7 +2,6 @@
 
 import { useEffect, useReducer, useState } from "react";
 import List from "./components/list";
-//import Item from "./components/Item";
 import Search from "./components/search";
 
 import useStateStor from "./hooks/useStoragestate";
