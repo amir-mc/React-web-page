@@ -1,15 +1,18 @@
 
-const Item = ({id,skill,title,name,URL,javd,HandelRemov})=>{
+const Item = ({id,points,title,author,url,javd,HandelRemo})=>{
+  const HnHRmove =()=>{
+    HandelRemo(id)
+  }
  
     return(
       <li>
              
             <span>
-              <a href={URL}> {name} </a>
+              <a href={url}> {url} </a>
             </span>
             <span>
               {
-                skill
+                author
               }
             </span>
             <span>
@@ -19,10 +22,10 @@ const Item = ({id,skill,title,name,URL,javd,HandelRemov})=>{
             </span>
             <span>
               {
-               javd
+               points
               }
             </span>
-            <button onClick={()=>HandelRemov(id)} >
+            <button onClick={HnHRmove} >
               removve
             </button>
           
