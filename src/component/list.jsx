@@ -1,7 +1,7 @@
 
 import Item from "./Item";
 
-const List = ({list , javd , HandelRemov}) => {
+const List = ({list  , HandelRemov}) => {
     return(   
      <ul>
        <p>{javd}</p>
