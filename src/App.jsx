@@ -1,19 +1,17 @@
 
-import { useEffect, useState } from 'react'
-import usePgae from './useState'
+import {  useState } from 'react'
+import useFech from './useFech'
 import Card from './component/Card'
 import Pageing from './component/Pageing'
 
 
-const url='https://react-mini-projects-api.classbon.com/Programmer/programmers'
+const url='https://react-mini-projects-api.classbon.com/Programmer/Sieve'
 function App() {
-  const [loding,data]=usePgae(url , 1)
-  const [page,setpage]=useState(1)
-  const [program,setprogram]=useState([])
-  useEffect(()=>{
-    if(loding) return 
-    setprogram(data[page-1  ])
-  },[loding,page])
+  const pagesiZe=2
+   const [page,setpage]=useState(1)
+  const [loding,program]=useFech(url , {page:page,pagesiZe:pagesiZe})
+
+  
   return(
   <div className="conainer pt-5">
     {
@@ -28,7 +26,7 @@ function App() {
         <>
         <div className="row d-flex jutify-content-center">
           {
-            program.map(({id,...programer})=>{
+            program.data.map(({id,...programer})=>{
               return(
                 <div className="col-3" key={id}>
                   <Card {...programer}/>
@@ -37,7 +35,7 @@ function App() {
           }
         </div>
         <div className="row">
-          <Pageing pages={data.length} setpage={setpage} activepage={page}/>
+          <Pageing pages={12} setpage={setpage} activepage={page}/>
         </div>
         </>
       )}
