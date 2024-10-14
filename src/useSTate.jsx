@@ -1,24 +1,23 @@
 import { useEffect, useState } from "react"
-import _ from "lodash"
-const usePgae=(url,pagesize)=>{
+const useFech=(url,stive)=>{
 
     const[loding , setLoding]=useState(true)
     const [data ,setData]=useState([])
 
     const getData=async()=>{
-        const response = await fetch(url)
-        const data =await response.json()
-
-        const pageData= _.chunk(data,pagesize)
-        console.log(pageData)
-        setData(pageData)
+        setLoding(true);
+        const response = await fetch(url,{method:'POST', body: JSON.stringify(stive),
+            headers:{'content-type':'application/json;charset-UTF-8'}
+        })
+        const data =await response.json()   
+        setData(data)
         setLoding(false);
     }
     useEffect(()=>{
         getData();
 
-    },[])
+    },[stive.page])
     return([loding,data])
 
 }
-export default usePgae;
+export default useFech;
